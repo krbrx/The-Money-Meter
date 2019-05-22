@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Money Meter</title>
+<link rel="stylesheet" type="text/css" href="CSS/Style.css">
+<link href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"
+rel="stylesheet" type="text/css"/>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(document).ready(function(){
+		var budgetList = JSON.parse(localStorage.getItem("budgetList"));
+		if (budgetList === null){
+			console.log("No Budget Record");
+		}
+		
+		else{
+			console.log("There Is Budget Record");
+			console.log(budgetList);
+				
+			for (i = 0; i < budgetList.length; i++){
+				$('#transactionTable tr:last').after("<tr> <td>" + budgetList[i].title + "</td> <td>" + budgetList[i].category + "</td> <td>" + budgetList[i].note + "</td> <td>" + budgetList[i].date + "</td> <td>" + budgetList[i].overall + "</td> <td>" + budgetList[i].method + "</td> </tr>");
+			}
+		}
+		
+		var depositList = JSON.parse(localStorage.getItem("depositList"));		
+		if (depositList === null){
+			console.log("No Income Record");
+		}
+		
+		else{
+			console.log("There Is/Are Deposit Record");
+			console.log(depositList);
+				
+			for (i = 0; i < depositList.length; i++){
+				$('#transactionTable tr:last').after("<tr> <td>" + depositList[i].title + "</td> <td>" + depositList[i].category  + "</td> <td>" + depositList[i].note + "</td> <td>" + depositList[i].date + "</td> <td>" + depositList[i].deposit + "</td> <td>" + depositList[i].method + "</td> </tr>");
+			}
+			
+			for (i = 0; i < depositList.length; i++){
+				$('#transactionTable2 tr:last').after("<tr> <td>" + depositList[i].title + "</td> <td>" + depositList[i].category  + "</td> <td>" + depositList[i].note + "</td> <td>" + depositList[i].date + "</td> <td>" + depositList[i].deposit + "</td> <td>" + depositList[i].method + "</td> </tr>");
+			}
+		}
+		
+		var expenseList = JSON.parse(localStorage.getItem("expenseList"));		
+		if (expenseList === null){
+			console.log("No Expense Record");
+		}
+		
+		else{
+			console.log("There Is/Are Expense Record");
+			console.log(expenseList);
+			
+			for (i = 0; i < expenseList.length; i++){
+				$('#transactionTable tr:last').after("<tr> <td>" + expenseList[i].title + "</td> <td>" + expenseList[i].category + "</td> <td>" + expenseList[i].note + "</td> <td>" + expenseList[i].date + "</td> <td>" + expenseList[i].expense + "</td> <td>" + expenseList[i].method + "</td> </tr>");
+			}
+			
+			for (i = 0; i < expenseList.length; i++){
+				$('#transactionTable3 tr:last').after("<tr> <td>" + expenseList[i].title + "</td> <td>" + expenseList[i].category + "</td> <td>" + expenseList[i].note + "</td> <td>" + expenseList[i].date + "</td> <td>" + expenseList[i].expense + "</td> <td>" + expenseList[i].method + "</td> </tr>");
+			}
+		}
+	});
+  $( function() {
+    $( "#tabs" ).tabs();
+  });
+</script>
+</head>
+
+<body>
+	<div id="menu">
+		<ul>
+			<li id="menuHead1"><strong>The Money Meter</strong><br>
+		    <p id="menuHead2">Your One-Stop budget tracker</p></li>
+			<li><a href="index.html" id="meunLink0">Home</a></li>
+			<li><a href="overview.html" id="meunLink1">Overview</a></li>
+			<li><a href="transaction_form.html" id="meunLink2">Transaction</a></li>
+			<li><a href="past_record.html" id="meunLink3">Past Transaction History</a></li>
+		</ul>
+	</div>
+	<br>
+	<div id="table">
+    <strong id="page04Head"><u>Past Transaction History</u></strong>
+	<div id="tabs">
+  	<ul>
+    <li><a href="#tabs-1">Past Transaction</a></li>
+    <li><a href="#tabs-2">Past Income</a></li>
+    <li><a href="#tabs-3">Past Expense</a></li>
+  	</ul>
+	<div id="tabs-1">
+	<table id="transactionTable" width="100%">
+		<tr>
+			<td bgcolor="gray"><b>Title</b></td>
+			<td bgcolor="gray"><b>Category</b></td>
+			<td bgcolor="gray"><b>Note</b></td>
+			<td bgcolor="gray"><b>Date of Record</b></td>
+			<td bgcolor="gray"><b>Amount ($)</b></td>
+			<td bgcolor="gray"><b>Transaction Method</b></td>
+		</tr>
+	</table>
+	<br>
+	</div>
+	<div id="tabs-2">
+	<table id="transactionTable2" width="100%">
+		<tr>
+			<td bgcolor="gray"><b>Title</b></td>
+			<td bgcolor="gray"><b>Category</b></td>
+			<td bgcolor="gray"><b>Note</b></td>
+			<td bgcolor="gray"><b>Date of Record</b></td>
+			<td bgcolor="gray"><b>Amount ($)</b></td>
+			<td bgcolor="gray"><b>Transaction Method</b></td>
+		</tr>
+	</table>
+	</div>	
+	<div id="tabs-3">
+	<table id="transactionTable3" width="100%">
+		<tr>
+			<td bgcolor="gray"><b>Title</b></td>
+			<td bgcolor="gray"><b>Category</b></td>
+			<td bgcolor="gray"><b>Note</b></td>
+			<td bgcolor="gray"><b>Date of Record</b></td>
+			<td bgcolor="gray"><b>Amount ($)</b></td>
+			<td bgcolor="gray"><b>Transaction Method</b></td>
+		</tr>
+	</table>
+	</div>	
+	</div>
+	</div>
+	<footer>&copy; Copyright 2017 By Wong Jia He All Rights Reserved</footer>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Money Meter</title>
+<link rel="stylesheet" type="text/css" href="CSS/Style.css">
+<link href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"
+rel="stylesheet" type="text/css"/>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#comfrim").hide();
+		
+		$("#clean").click(function(){
+		 	$("#clear").fadeOut();
+			$("#comfrim").fadeIn();
+		});
+		
+		$("#yes").click(function(){
+			localStorage.clear();
+			alert("All Records Have Been Cleared Away");
+			$("#clear").fadeIn();
+			$("#comfrim").fadeOut();
+			location.reload();
+		});
+						
+		$("#no").click(function(){
+		 	$("#clear").fadeIn();
+			$("#comfrim").fadeOut();
+		});
+		
+		var budgetList = JSON.parse(localStorage.getItem("budgetList"));	
+		if (budgetList === null){
+			console.log("No Budget Record");
+		}
+		
+		else{
+			var over = budgetList[0].overall;
+			var over1 = parseFloat(budgetList[0].overall);
+			$('#overall').text("Overall Budget : $"+over1.toFixed(2));
+		}
+		
+		var depositList = JSON.parse(localStorage.getItem("depositList"));	
+		var totalDeposit = 0;
+		if(depositList === null){
+			console.log("No Income Record");
+		}
+		
+		else{
+			for (i = 0; i < depositList.length; i++){
+			totalDeposit += parseFloat(depositList[i].deposit) ;
+			}
+			$('#income').text("Total Income : $"+totalDeposit.toFixed(2));
+		}
+		
+		var expenseList = JSON.parse(localStorage.getItem("expenseList"));	
+		var totalExpense = 0;
+		if(expenseList === null){
+			console.log("No Expense Record");
+			
+		}
+		else{
+			for (i = 0; i < expenseList.length; i++){
+			totalExpense += parseFloat(expenseList[i].expense) ;
+			}
+			$('#expense').text("Total Expense  : $"+totalExpense.toFixed(2));
+		}
+		
+		var total1= over1 + totalDeposit - totalExpense;
+		if(expenseList === null && budgetList === null && depositList === null){
+		}
+		else{
+			$('#final2').text("Final Amount(With Income Added) : $"+total1.toFixed(2));
+		}
+		
+		var total2 = over1 - totalExpense;
+		if(expenseList === null && budgetList === null){
+		}
+		else{
+			$('#final').text("Final Amount(Without Income Added) : $"+total2.toFixed(2));
+		}
+				
+		var per = total1 / over * 100;
+		if(budgetList === null){
+			$('#comment').text("Comment On Budget : -");
+			$('#rating').html("<strong>Budget Control Rating : -</strong>");
+		}
+		else{
+			$('#per').text("Current Budget Level :"+Math.round(per)+"%");
+			checkPercent();
+		}
+		
+		function checkPercent(){
+			if(per >= 100){
+				$('#comment').text("Comment On Budget : Wa!! So Much Much Money!! So Rich");
+				$('#rating').html("<strong>Budget Control Rating : A++</strong>");
+				$("#ten").css("background-color","green");
+				$("#nine").css("background-color","green");
+				$("#eight").css("background-color","green");
+				$("#seven").css("background-color","green");
+				$("#six").css("background-color","green");
+				$("#five").css("background-color","green");
+				$("#four").css("background-color","green");
+				$("#three").css("background-color","green");
+				$("#two").css("background-color","green");
+				$("#one").css("background-color","green");
+				$("#zero").css("background-color","green");
+			}
+			
+			else if(per >= 90){
+				$('#comment').text("Comment On Budget : Hehe.....Rich Man");
+				$('#rating').html("<strong>Budget Control Rating : A</strong>");
+				$("#nine").css("background-color","green");
+				$("#eight").css("background-color","green");
+				$("#seven").css("background-color","green");
+				$("#six").css("background-color","green");
+				$("#five").css("background-color","green");
+				$("#four").css("background-color","green");
+				$("#three").css("background-color","green");
+				$("#two").css("background-color","green");
+				$("#one").css("background-color","green");
+				$("#zero").css("background-color","green");
+			}
+			
+			else if(per >= 80){
+				$('#comment').text("Comment On Budget : Wa....You Have Quite Alot Of Money");
+				$('#rating').html("<strong>Budget Control Rating : A</strong>");
+				$("#eight").css("background-color","green");
+				$("#seven").css("background-color","green");
+				$("#six").css("background-color","green");
+				$("#five").css("background-color","green");
+				$("#four").css("background-color","green");
+				$("#three").css("background-color","green");
+				$("#two").css("background-color","green");
+				$("#one").css("background-color","green");
+				$("#zero").css("background-color","green");
+			}
+			
+			else if(per >= 70){
+				$('#comment').text("Comment On Budget : Wa....You Have Alot Of Money");
+				$('#rating').html("<strong>Budget Control Rating : B</strong>");
+				$("#seven").css("background-color","green");
+				$("#six").css("background-color","green");
+				$("#five").css("background-color","green");
+				$("#four").css("background-color","green");
+				$("#three").css("background-color","green");
+				$("#two").css("background-color","green");
+				$("#one").css("background-color","green");
+				$("#zero").css("background-color","green");
+			}
+			
+			else if(per >= 60){
+				$('#comment').text("Comment On Budget : Good, You Are Having A Good Track On Your Budget");
+				$('#rating').html("<strong>Budget Control Rating : C</strong>");
+				$("#six").css("background-color","yellow");
+				$("#five").css("background-color","yellow");
+				$("#four").css("background-color","yellow");
+				$("#three").css("background-color","yellow");
+				$("#two").css("background-color","yellow");
+				$("#one").css("background-color","yellow");
+				$("#zero").css("background-color","yellow");
+			}
+			
+			else if(per >= 50){
+				$('#comment').text("Comment On Budget : Wa.....Luck You Are In The Middle");
+				$('#rating').html("<strong>Budget Control Rating : D</strong>");
+				$("#five").css("background-color","yellow");
+				$("#four").css("background-color","yellow");
+				$("#three").css("background-color","yellow");
+				$("#two").css("background-color","yellow");
+				$("#one").css("background-color","yellow");
+				$("#zero").css("background-color","yellow");
+			}
+			
+			else if(per >= 40){
+				$('#comment').text("Comment On Budget : Please Control Your Budget");
+				$('#rating').html("<strong>Budget Control Rating : E</strong>");
+				$("#four").css("background-color","yellow");
+				$("#three").css("background-color","yellow");
+				$("#two").css("background-color","yellow");
+				$("#one").css("background-color","yellow");
+				$("#zero").css("background-color","yellow");
+			}
+			
+			else if(per >= 30){
+				$('#comment').text("Comment On Budget : You Have A Little Spent Too Much");
+				$('#rating').html("<strong>Budget Control Rating : E</strong>");
+				$("#three").css("background-color","red");
+				$("#two").css("background-color","red");
+				$("#one").css("background-color","red");
+				$("#zero").css("background-color","red");
+			}
+			
+			else if(per >= 20){
+				$('#comment').text("Comment On Budget : You Have Spent Too Much");
+				$('#rating').html("<strong>Budget Control Rating : F</strong>");
+				$("#three").css("background-color","red");
+				$("#two").css("background-color","red");
+				$("#one").css("background-color","red");
+				$("#zero").css("background-color","red");
+			}
+			
+			else if(per >= 10){
+				$('#comment').text("Comment On Budget : You Are Going Broke");
+				$('#rating').html("<strong>Budget Control Rating : F</strong>");
+				$("#two").css("background-color","red");
+				$("#one").css("background-color","red");
+				$("#zero").css("background-color","red");
+			}
+			
+			else if(per >= 0){
+				$('#comment').text("Comment On Budget : You Are Broke");
+				$('#rating').html("<strong>Budget Control Rating : F</strong>");
+				$("#zero").css("background-color","red");
+			}
+			
+			else if(per < 0){
+				$('#comment').text("Comment On Budget : DON'T KNOW WHAT TO SAY......YOU SPENT TOO MUCH MONEY");
+				$('#rating').html("<strong>Budget Control Rating : F++</strong>");
+				$("#ten").css("background-color","red");
+				$("#nine").css("background-color","red");
+				$("#eight").css("background-color","red");
+				$("#seven").css("background-color","red");
+				$("#six").css("background-color","red");
+				$("#five").css("background-color","red");
+				$("#four").css("background-color","red");
+				$("#three").css("background-color","red");
+				$("#two").css("background-color","red");
+				$("#one").css("background-color","red");
+				$("#zero").css("background-color","red");
+			}
+		}
+		
+		var per2 = total2 / over * 100;
+		var over2 = per2 -100;
+		if(budgetList === null){
+			$('#pieGuide').html("<b>Gray Part : Overall : -</b>");
+			$('#red').html("<strong>Red Part: Expense: -</strong>");
+		}
+		else{
+			$('#pieGuide').html("<b>Gray Part : Overall : "+ Math.round(per2)+"%</b>");
+			$('#red').html("<strong>Red Part: Expense : " + Math.round(over2)+"%</strong>");
+			checkPercent2();
+		}
+		
+		function checkPercent2(){
+			if(per2 >= 95){
+				$("#b1").css("background-color","red");
+			}
+			
+			else if(per2 >= 90){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+			}
+			
+			else if(per2 >= 85){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+			}
+			
+			else if(per2 >= 75){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+			}
+			
+			else if(per2 >= 70){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+			}
+			
+			else if(per2 >= 65){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+			}
+			
+			else if(per2 >= 60){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+			}
+			
+			else if(per2 >= 55){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+			}
+			
+			else if(per2 >= 50){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+			}
+			
+			else if(per2 >= 45){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+			}
+			
+			else if(per2 >= 40){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+			}
+			
+			else if(per2 >= 35){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+			}
+			
+			else if(per2 >= 30){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+				$("#b13").css("background-color","red");
+			}
+			
+			else if(per2 >= 25){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+				$("#b13").css("background-color","red");
+				$("#b14").css("background-color","red");
+			}
+			
+			else if(per2 >= 20){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+				$("#b13").css("background-color","red");
+				$("#b14").css("background-color","red");
+				$("#b15").css("background-color","red");
+			}
+			
+			else if(per2 >= 15){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+				$("#b13").css("background-color","red");
+				$("#b14").css("background-color","red");
+				$("#b15").css("background-color","red");
+				$("#b16").css("background-color","red");
+			}
+			
+			else if(per2 >= 10){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+				$("#b13").css("background-color","red");
+				$("#b14").css("background-color","red");
+				$("#b15").css("background-color","red");
+				$("#b16").css("background-color","red");
+				$("#b17").css("background-color","red");
+			}
+			
+			else if(per2 >= 5){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+				$("#b13").css("background-color","red");
+				$("#b14").css("background-color","red");
+				$("#b15").css("background-color","red");
+				$("#b16").css("background-color","red");
+				$("#b17").css("background-color","red");
+				$("#b18").css("background-color","red");
+			}
+			
+			else if(per2 >= 0){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+				$("#b13").css("background-color","red");
+				$("#b14").css("background-color","red");
+				$("#b15").css("background-color","red");
+				$("#b16").css("background-color","red");
+				$("#b17").css("background-color","red");
+				$("#b18").css("background-color","red");
+				$("#b19").css("background-color","red");
+			}
+			
+			else if(per2 > 0){
+				$("#b1").css("background-color","red");
+				$("#b2").css("background-color","red");
+				$("#b3").css("background-color","red");
+				$("#b4").css("background-color","red");
+				$("#b5").css("background-color","red");
+				$("#b6").css("background-color","red");
+				$("#b7").css("background-color","red");
+				$("#b8").css("background-color","red");
+				$("#b9").css("background-color","red");
+				$("#b10").css("background-color","red");
+				$("#b11").css("background-color","red");
+				$("#b12").css("background-color","red");
+				$("#b13").css("background-color","red");
+				$("#b14").css("background-color","red");
+				$("#b15").css("background-color","red");
+				$("#b16").css("background-color","red");
+				$("#b17").css("background-color","red");
+				$("#b18").css("background-color","red");
+				$("#b19").css("background-color","red");
+				$("#b20").css("background-color","red");
+			}
+			
+		}
+	});
+</script>
+</head>
+
+<body>
+	<div id="menu">
+		<ul>
+			<li id="menuHead1"><strong>The Money Meter</strong><br>
+		    <p id="menuHead2">Your One-Stop budget tracker</p></li>
+			<li><a href="index.html" id="meunLink0">Home</a></li>
+			<li><a href="overview.html" id="meunLink1">Overview</a></li>
+			<li><a href="transaction_form.html" id="meunLink2">Transaction</a></li>
+			<li><a href="past_record.html" id="meunLink3">Past Transaction History</a></li>
+		</ul>
+	</div>
+	<br>
+	<div id="view">
+	<strong id="page02Head"><u>Overview</u></strong>
+	<br>
+	<br>
+	<div id="overViewPart01">
+		<div id= "overViewPart01Top">
+		<p id="overall">Overall Budget: $0</p>
+		<p id="income">Total Income : $0</p>
+		<p id="expense">Total Expense : $0</p>
+		<p id="final">Final Amount(Without Income Added) :$0</p>
+		<p id="final2">Final Amount(With Income Added) : $0</p>
+		<p id="comment">Comment On Budget :</p>
+		<p id="rating"><strong>Budget Control Rating:</strong></p>
+	<br>
+	</div>
+	<div id= "overViewPart01Bottom">	
+	<div id="clear">
+	<b>Click the button below to reset your  budget</b>
+	<br>
+	<br>
+	<button class="button" id="clean">Reset Budget</button>
+	</div>
+	<div id="comfrim">
+		<b>Do You Want to Clear All Records</b>
+		<br>
+		<br>
+		<button class="button" id="yes">Yes</button>
+		<button class="button" id="no">No</button>
+	</div>
+	</div>
+	</div>
+	<div id="overViewPart02">
+		<div id ="budgetMeter">
+		<strong><u>Budget Meter</u></strong>
+		<br>
+		<br>
+		<table class="meter">
+			<tr><td id ="ten">100%</td></tr>
+			<tr><td id ="nine">90%</td></tr>
+			<tr><td id ="eight">80%</td></tr>
+			<tr><td id ="seven">70%</td></tr>
+			<tr><td id ="six">60%</td></tr>
+			<tr><td id ="five">50%</td></tr>
+			<tr><td id ="four">40%</td></tr>
+			<tr><td id ="three">30%</td></tr>
+			<tr><td id ="two">20%</td></tr>
+			<tr><td id ="one">10%</td></tr>
+			<tr><td id ="zero">00%</td></tr>
+		</table>
+			<div id ="currentLevel">
+			<br>
+				<p id="per">Current Budget Level:</p>
+			</div>
+			</div>
+	</div>
+	</div>
+	<div id ="pie">
+		<strong><u>Budget Pie Chart</u></strong>
+		<br>
+		<br>
+		<table id="pieChart" height="300px" width="300px">
+			<tr>
+				<td bgcolor="gray" id ="b1"></td>
+				<td bgcolor="gray" id ="b2"></td>
+				<td bgcolor="gray" id ="b3"></td>
+				<td bgcolor="gray" id ="b4"></td>
+				<td bgcolor="gray" id ="b5"></td>
+				<td bgcolor="gray" id ="b6"></td>
+			</tr>
+			<tr>
+				<td bgcolor="gray" id ="b20"></td>
+				<td ></td>
+				<td ></td>
+				<td ></td>
+				<td ></td>
+				<td bgcolor="gray" id ="b7"></td>
+			</tr>
+			<tr>
+				<td bgcolor="gray" id ="b19"></td>
+				<td ></td>
+				<td ></td>
+				<td ></td>
+				<td ></td>
+				<td bgcolor="gray" id ="b8"></td>
+			</tr>
+			<tr>
+				<td bgcolor="gray" id ="b18"></td>
+				<td ></td>
+				<td ></td>
+				<td ></td>
+				<td ></td>
+				<td bgcolor="gray" id ="b9"></td>
+			</tr>
+			<tr>
+				<td bgcolor="gray" id ="b17"></td>
+				<td ></td>
+				<td ></td>
+				<td></td>
+				<td ></td>
+				<td bgcolor="gray" id ="b10"></td>
+			</tr>
+			<tr>
+				<td bgcolor="gray" id ="b16"></td>
+				<td bgcolor="gray" id ="b15"></td>
+				<td bgcolor="gray" id ="b14"></td>
+				<td bgcolor="gray" id ="b13"></td>
+				<td bgcolor="gray" id ="b12"></td>
+				<td bgcolor="gray" id ="b11"></td>
+			</tr>
+		</table>
+		<p id="pieGuide"><b>Gray Part : Overall : -</b></p>
+		<br>
+		<br>
+		<p id="red"><b>Red Part: Expense: -</b></p>
+	</div>
+	<footer>&copy; Copyright 2017 By Wong Jia He All Rights Reserved</footer>
+</body>
+</html>

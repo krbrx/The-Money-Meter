@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Money Meter</title>
+<link rel="stylesheet" type="text/css" href="CSS/Style.css">
+<link href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"
+rel="stylesheet" type="text/css"/>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(document).ready(function(){
+		console.log(localStorage.length);
+		
+        $("#setBudget").hide();
+		$("#addDeposit").hide();
+		$("#addExpense").hide();
+		
+		check();
+		
+		$("#setBudgetTitle").click(function(){
+			$("#setBudget").slideToggle();
+			$("#addDeposit").hide();
+			$("#addExpense").hide();
+		});
+	
+	
+		$("#addDepositTitle").click(function(){
+			$("#addDeposit").slideToggle();
+			$("#setBudget").hide();
+			$("#addExpense").hide();
+		});
+	
+		$("#addExpenseTitle").click(function(){
+			$("#addExpense").slideToggle();
+			$("#setBudget").hide();
+			$("#addDeposit").hide();
+		});
+		
+		function check(){
+			var test = localStorage.length;
+			if(test >= 1){
+				$("#setBudgetTitle").hide();
+			}
+			else{
+				$("#setBudgetTitle").show();
+				$("#addDepositTitle").hide();
+				$("#addExpenseTitle").hide();
+			}
+		}
+	
+		function Budget(overall, method, category, title, date, note) {
+                this.overall = overall;
+				this.method = method;
+				this.category = category;
+				this.title = title;
+				this.date = date;
+				this.note = note;
+        }
+		
+        $("#settingBudget").submit(function(event) {
+                event.preventDefault();
+				var overall = $("#txtSet").val();
+				var method = "-";
+				var category = "Setting Budget";
+				var title = "Create Budget";
+				var	date = $("#txtSetDate").val();
+				var note = "-";
+                var temp = new Budget(overall, method, category, title, date, note);
+				var x1 = $("#txtSet").val().length;
+				var x2 = $("#txtSetDate").val().length;
+				var check = /^[a-zA-Z ]*$/;
+ 
+				if(check.test($("#txtSet").val())){
+					alert("Please Do Not Key Any Letters");
+				}
+			
+				if (x1 === 0){
+					alert("Please Key In Your Budget");
+				}
+
+				if (x2 === 0){
+					alert("Please Key In The Date");
+				}
+	
+				else{
+                	alert("Budget Have Being Set");
+					storeBudget(temp);
+					console.log(temp);
+					location.reload();
+				}
+        });
+		
+		function storeBudget(temp) {
+                if (window.localStorage) {
+                    var budgetList = JSON.parse(localStorage.getItem("budgetList"));
+                    if (budgetList === null)
+                        budgetList = []
+                    budgetList.push(temp);
+                    updateBudgetList(budgetList);
+                }
+        }
+
+        function getBudgetList() {
+                var budgetList;
+                if (window.localStorage) {
+                    budgetList = JSON.parse(localStorage.getItem("budgetList"));
+                }
+        }
+
+        function updateBudgetList(arr) {
+                localStorage.setItem("budgetList", JSON.stringify(arr));
+				console.log(localStorage.length);
+				alert("Budget Have Being Recorded");
+        }
+		
+		function Deposit(deposit, method, category, title, date, note){
+				this.deposit = deposit;
+				this.method = method;
+				this.category = category;
+				this.title = title;
+				this.date = date;
+				this.note = note;
+        }
+		
+		$("#addingDeposit").submit(function(event) {
+            event.preventDefault();
+			var deposit = $("#txtDeposit").val();
+			var method = $('select option:selected').val();
+            var category = "Adding Income";
+			var title  = "Income";
+			var date = $("#txtDepositDate").val();
+			var note = $("#txtNote").val();
+            var temp = new Deposit(deposit, method, category, title, date, note);
+			var y1 = $("#txtDeposit").val().length;
+			var y2 = $("#txtDepositDate").val().length;
+			var	d2 = new Date().toLocaleDateString();
+			var check = /^[a-zA-Z ]*$/;
+			
+			if(check.test($("#txtDeposit").val()) ){
+				alert("Please Do Not Key Any Letters");
+				event.preventDefault();
+			}
+			
+			if (y1 === 0){
+				alert("Please Key In Your Income");
+				event.preventDefault();
+			}
+			
+			if(y2 === 0){
+				alert("Please Key In The Date");
+				event.preventDefault();
+			}
+			
+			if(! $('select option:selected').val()){
+				alert("Please Select Your Payment Method");
+				event.preventDefault();
+			}
+			
+            else{   
+				alert("Income Have Being Added");
+				storeDeposit(temp);
+				console.log(temp);
+				location.reload();
+			}
+        });
+		
+		function storeDeposit(temp) {
+                if (window.localStorage) {
+                    var depositList = JSON.parse(localStorage.getItem("depositList"));
+                    if (depositList === null)
+                        depositList = []
+                    depositList.push(temp);
+                    updateDepositList(depositList);
+                }
+        }
+
+        function getDepositList() {
+                var depositList;
+                if (window.localStorage) {
+                    depositList = JSON.parse(localStorage.getItem("depositList"));
+                }
+        }
+
+        function updateDepositList(arr) {
+                localStorage.setItem("depositList", JSON.stringify(arr));
+				console.log(localStorage.length);
+				alert("Income Record Have Being Recorded");
+        }
+		
+		function Expense(expense, method, category, title, date, note) {
+				this.expense = expense;
+				this.method = method;
+				this.category = category;
+				this.title = title;
+				this.date = date;
+				this.note = note;
+        }
+		
+		$("#addingExpense").submit(function(event) {
+            event.preventDefault();
+			var expense = $("#txtExpense").val();
+			var method = $('select option:selected').val();
+            var category = "Adding Expenses";
+			var title  = "Expense";
+			var date = $("#txtExpenseDate").val();
+			var note = $("input:radio[name=spending]:checked").val();
+            var temp = new Expense(expense, method, category, title, date, note);
+			var z1 = $("#txtExpense").val().length;
+			var z2 = $("#txtExpenseDate").val().length;
+			var	d3 = new Date().toLocaleDateString();
+			var check = /^[a-zA-Z ]*$/;
+			
+			if(check.test($("#txtExpense").val())){
+				alert("Please Do Not Key Any Letters");
+				event.preventDefault();
+			}
+			
+			if ($("#txtExpense").val().length === 0)  {
+				alert("Please Key In Your Expense");
+			}
+			
+			if ($("#txtExpenseDate").val().length === 0){
+				alert("Please Key In The Date");
+				event.preventDefault();
+			}
+			
+			if (!$("input:radio[name=spending]:checked").val()) {
+   				alert("Please Select The Area Of Spending");
+				event.preventDefault();
+			}
+			
+			if(!$('select option:selected').val()){
+				alert("Please Select Your Payment Method");
+				event.preventDefault();
+			}
+			
+			else{
+            	alert("Expense Record Have Being Added");
+				storeExpense(temp);
+				console.log(temp);
+				location.reload();
+			}
+        });
+		
+		function storeExpense(temp) {
+                if (window.localStorage) {
+                    var expenseList = JSON.parse(localStorage.getItem("expenseList"));
+                    if (expenseList === null)
+                        expenseList = []
+                    expenseList.push(temp);
+                    updateExpenseList(expenseList);
+                }
+        }
+
+        function getExpenseList() {
+                var expenseList;
+                if (window.localStorage) {
+                    expenseList = JSON.parse(localStorage.getItem("expenseList"));
+                }
+        }
+
+        function updateExpenseList(arr) {
+                localStorage.setItem("expenseList", JSON.stringify(arr));
+				console.log(localStorage.length);
+				alert("Spending Record Have Being Recorded");
+        }
+		
+		$( function() {
+    		$( "#txtSetDate" ).datepicker();
+			$( "#txtDepositDate" ).datepicker();
+			$( "#txtExpenseDate" ).datepicker();
+  		} );	
+});
+</script>
+</head>
+
+<body>
+	
+	<div id="menu">
+		<ul>
+			<li id="menuHead1"><strong>The Money Meter</strong><br>
+		    <p id="menuHead2">Your One-Stop budget tracker</p></li>
+			<li><a href="index.html" id="meunLink0">Home</a></li>
+			<li><a href="overview.html" id="meunLink1">Overview</a></li>
+			<li><a href="transaction_form.html" id="meunLink2">Transaction</a></li>
+			<li><a href="past_record.html" id="meunLink3">Past Transaction History</a></li>
+		</ul>
+	</div>
+	<br>
+	<div id="form">
+	<strong id="page03Head"><u>Transaction</u></strong>
+	<div>
+	<p id="setBudgetTitle"><strong>Setting Budget</strong></p>
+	<div id="setBudget">
+		<strong><u>Key in your budget and the amount that you can spent</u></strong>
+		<br>
+		<br>
+		<form id="settingBudget">
+			<strong>Budget: </strong><input type="text" name="txtSet" id="txtSet">
+			<br>
+			<br>
+			<strong>Budget Set Date: </strong><input type="text" name="txtSetDate" id="txtSetDate">
+			<br>
+			<br>
+			<input type="submit" value="Submit" id="submit01">
+		</form>
+	</div>
+	<p id="addDepositTitle"><strong>Income</strong></p>
+	<div id="addDeposit">
+		<strong><u>Key In Your Income</u></strong>
+		<br>
+		<br>
+		<form id="addingDeposit">
+			<strong>Income: </strong><input type="text" name="txtDeposit" id="txtDeposit">
+			<br>
+			<br>
+			<strong>Deposit Date: </strong><input type="text" name="txtDepositDate" id="txtDepositDate">
+			<br>
+			<br>
+			<strong>Transaction Method: </strong>
+			<select name="depositTrasaction">
+				<option value="Cash">Cash</option>
+				<option value="Credit Card/Debit Card">Credit Card/Debit Card</option>
+				<option value="NETS">NETS</option>
+				<option value="E-Transaction">E-Transaction</option>
+			</select>
+			<br>
+			<br>
+			<strong>Note: </strong><input type="text" name="txtNote" id="txtNote" value="-">
+			<br>
+			<br>
+			<input type="submit" value="Submit" id="submit03">
+		</form>
+	</div>
+	<p id="addExpenseTitle"><strong>Expense</strong></p>
+	<div id="addExpense">
+		<strong><u>Key In Your Expense</u></strong>
+		<br>
+		<br>
+		<form id="addingExpense">
+			<strong>Expense: </strong><input type="text" name="txtExpense" id="txtExpense">
+			<br>
+			<br>
+			<strong>Date Of Spending: </strong><input type="text" name="txtExpenseDate" id="txtExpenseDate">
+			<br>
+			<br>
+			<strong>Transaction Method: </strong>
+			<select name="trasaction" id="transcation">
+				<option value="Cash">Cash</option>
+				<option value="Credit Card/Debit Card">Credit Card/Debit Card</option>
+				<option value="NETS">NETS</option>
+				<option value="E-Transaction">E-Transaction</option>
+			</select>
+			<br>
+			<br>
+			<b>Area Of Speding: </b>
+			<input type="radio" name="spending" value="Food/Drinks">Food/Drinks
+    		<input type="radio" name="spending" value="Bills">Bills
+			<input type="radio" name="spending" value="Transport">Transport
+   			<input type="radio" name="spending" value="Entertainment">Entertainment
+    		<input type="radio" name="spending" value="Clothing">Clothing
+			<input type="radio" name="spending" value="Others">Others
+			<br>
+			<br>
+			<input type="submit" value="Submit" id="submit04">
+		</form>
+		</div>
+	</div>
+	</div>
+	<footer>&copy; Copyright 2017 By Wong Jia He All Rights Reserved</footer>
+</body>
+</html>

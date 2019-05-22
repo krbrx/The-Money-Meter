@@ -1,0 +1,351 @@
+@charset "utf-8";
+body{
+	font-family:Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif';
+}
+
+#homePart1{
+	float: left;
+	width: 40%;
+	padding-bottom: 10px;
+}
+
+#homePart2{
+	float: right;
+	width: 59%;
+	padding-bottom: 10px;
+}
+
+#calander{
+	float: left;
+	border-radius: 25px;
+    border: 2px solid #73AD21;
+	width: 100%;
+}
+
+#date{
+	font-size: 50px;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-weight: bold;
+}
+
+#date2{
+	font-size: 35px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#time{
+	font-size: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+
+#overview{
+	float: left;
+	border-radius: 25px;
+    border: 2px solid #73AD21;
+	padding: 10px;
+	width: 97%;
+}
+
+#recent{
+	float: left;
+	border-radius: 25px;
+    border: 2px solid #73AD21;
+	padding: 10px;
+	width: 97%;
+	
+}
+
+#recentTransaction, td {
+	font-size: 12px;
+	height: 7px;
+}
+
+#title{
+	font-size: 30px;
+}
+
+#title2{
+	font-size: 30px;
+}
+
+ul{
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+	background-color: dimgrey;
+	border-bottom: 3px solid darkgray;
+	color: white;
+	width: auto;
+}
+
+li{
+	float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+	background-color: gray;
+}
+
+#menuHead1{
+	font-size: 27.5px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#menuHead2{
+	font-size: 15px;
+}
+
+#meunLink0{
+	font-size: 18px;
+	padding: 20px;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+
+#meunLink1{
+	font-size: 18px;
+	padding: 20px;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+#meunLink2{
+	font-size: 18px;
+	padding: 20px;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+#meunLink3{
+	font-size: 18px;
+	padding: 20px;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+#page02Head{
+	font-size: 25px;
+}
+
+#overViewPart01{
+	float: left;
+	width: 27%
+}
+
+#overViewPart02{
+	padding: 10px;
+	float: left;
+	width: 20%
+}
+
+#overViewPart01Top{
+	padding: 10px;
+	border-radius: 25px;
+    border: 2px solid #73AD21;
+}
+
+#overViewPart01Bottom{
+	padding: 10px;
+}
+
+#meter, td{
+	width: 80px;
+	height: 40px;
+	font-weight: bold;
+}
+#pie{
+	padding-left: 10px;
+
+}
+
+#pieChart{
+	 border-collapse: collapse;
+}
+
+#pieGuide{
+	float: left;
+}
+
+#view{
+	padding-bottom: 10px;
+}
+
+#currentLevel{
+	float: right;
+	font-weight: bold;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12.5px 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12.5px;
+}
+
+.button:hover{
+	background-color: darkgreen;
+}
+
+.button2 {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+}
+
+.button2:hover{
+	background-color: darkgreen;
+}
+
+#page03Head{
+	font-size: 25px;
+}
+
+#setBudgetTitle{
+	border-radius: 10px;
+    background: #73AD21;
+    padding: 10px; 
+	padding-bottom: 15px;
+    width: auto;
+    height: 10px;
+}
+
+#setBudgetTitle:hover{
+	background-color: darkgreen;
+}
+
+#setBudget{
+	border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px; 
+    width: auto;
+}
+
+#addDepositTitle{
+	border-radius: 10px;
+    background: #73AD21;
+    padding: 10px; 
+	padding-bottom: 15px;
+    width: auto;
+    height: 10px;
+}
+
+#addDepositTitle:hover{
+	background-color: darkgreen;
+}
+
+#addDeposit{
+	border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px; 
+    width: auto;
+}
+
+#addExpenseTitle{
+	border-radius: 10px;
+    background: #73AD21;
+    padding: 10px; 
+	padding-bottom: 15px;
+    width: auto;
+    height: 10px;
+}
+
+#addExpenseTitle:hover{
+	background-color: darkgreen;
+}
+
+#addExpense{
+	border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px; 
+    width: auto;
+}
+
+#form{
+	padding-bottom: 10px;
+}
+
+#page04Head{
+	font-size: 25px;
+}
+
+#pastTransaction{
+	width: 100%;
+	text-align: center;
+	border: 1px solid black;
+}
+
+
+#transactionTable{
+	border-collapse: collapse;
+}
+
+#transactionTable2{
+	border-collapse: collapse;
+}
+
+#transactionTable3{
+	border-collapse: collapse;
+}
+
+#transactionTable, td, tr{
+	border: 2px solid black;
+	text-align: center;
+	height: 25px;
+}
+
+#transactionTable2, td, tr{
+	border: 2px solid black;
+	text-align: center;
+	height: 25px;
+}
+
+#transactionTable3, td, tr{
+	border: 2px solid black;
+	text-align: center;
+	height: 25px;
+}
+
+#recentTransaction{
+	border-collapse: collapse;
+}
+
+#recentTransaction, td, tr{
+	border: 2px solid black;
+	text-align: center;
+}
+
+#table{
+	padding-bottom: 10px;
+}
+
+footer{
+	background-color: grey;
+	color: white;
+	clear: both;
+	text-align: center;
+	padding: 20px;
+	padding-bottom: 0px;
+	height: 40px;
+	border-top: 3px solid darkgray;
+}
+
